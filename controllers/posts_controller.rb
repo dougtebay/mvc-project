@@ -1,20 +1,20 @@
 class PostsController
   def show_title_prompt
-    view = PostNewView.new
-    view.get_title
+    view = GetTitle.new
+    view.render
   end
 
   def create_new_post(user, title)
     post = Post.new(title)
     user.add_post(post)
-    view = PostNewView.new
-    view.post_created
+    view = PostCreated.new
+    view.render
   end
 
   def show_posts(user)
     if any_posts?(user)
-      view = PostNewView.new
-      view.show_posts(user)
+      view = ShowPosts.new
+      view.render(user)
     else
       no_posts_found
     end
@@ -25,13 +25,13 @@ class PostsController
   end
 
   def no_posts_found
-    view = PostNewView.new
-    view.no_posts_found
+    view = NoPostsFound.new
+    view.render
   end
 
   def show_user_prompt
-    view = PostNewView.new
-    view.get_user
+    view = GetUser.new
+    view.render
   end
 
   def show_posts_by_user(user_string)
@@ -47,22 +47,22 @@ class PostsController
   end
 
   def user_not_found
-    view = PostNewView.new
-    view.user_not_found
+    view = UserNotFound.new
+    view.render
   end
 
   def show_post_by_title(user, title)
     if post = post_by_title?(user, title)
-     view = PostNewView.new
-     view.post_found(post)
+     view = PostFound.new
+     view.render(post)
     else
       post_not_found
     end
   end
 
   def post_not_found
-    view = PostNewView.new
-    view.post_not_found
+    view = PostNotFound.new
+    view.render
   end
 
   def post_by_title?(user, title)
@@ -72,8 +72,8 @@ class PostsController
   def delete_post_by_title(user, title)
     if post = post_by_title?(user, title)
       user.posts.delete(post)
-      view = PostNewView.new
-      view.post_deleted
+      view = PostDeleted.new
+      view.render
     else
       post_not_found
     end
@@ -82,8 +82,8 @@ class PostsController
   def delete_all_posts(user)
     if any_posts?(user)
       user.posts.clear
-      view = PostNewView.new
-      view.all_posts_deleted
+      view = AllPostsDeleted.new
+      view.render
     else
       no_posts_found
     end
