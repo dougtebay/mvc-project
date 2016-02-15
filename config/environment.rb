@@ -1,0 +1,7 @@
+require_relative '../models/user.rb'
+require_relative '../models/post.rb'
+require_relative '../models/comment.rb'
+require_relative '../views/posts/new.rb'
+require_relative '../views/comments/new.rb'
+require_relative '../controllers/posts_controller.rb'
+require_relative '../controllers/comments_controller.rb'
